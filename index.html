@@ -9,482 +9,202 @@
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
-      body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-image: url('img/vip.jpg');
-      background-size: cover;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
-      background-position: center;
-      color: #f8f9fa;
-      transition: background 0.5s ease-in-out;
-      padding-bottom: 50px;
-    }
 
-    /* Estilo do Header */
-    header {
-      background: linear-gradient(135deg, #0d6efd, #6610f2);
-      color: #ffffff;
-      font-family: 'Algerian', serif;
-      text-align: center;
-      padding: 60px 0;/* Estilo Geral */
+/* Estilo Global */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-image: url('img/vip.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center;
-    color: #f8f9fa;
-    transition: background 0.5s ease-in-out;
-    padding-bottom: 50px;
-}
-
-/* Estilo do Header */
-header {
-    background: linear-gradient(135deg, #0d6efd, #6610f2);
-    color: #ffffff;
-    font-family: 'Algerian', serif;
-    text-align: center;
-    padding: 60px 0;
-    border-bottom: 5px solid #ffd700;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    animation: headerFadeIn 1.5s ease;
-}
-
-header img {
-    width: 120px;
-    border-radius: 50%;
-    margin-bottom: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-header img:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-}
-
-header h1 {
-    font-size: 3rem;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
-
-header p {
-    font-size: 1.2rem;
-    letter-spacing: 1px;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  background-image: url('img/vip.jpg');
+  background-size: cover;  /* Faz a imagem cobrir toda a tela */
+  background-position: center;  /* Centraliza a imagem */
+  background-attachment: fixed;  /* Fixa a imagem no scroll */
+  background-repeat: no-repeat;  /* Impede que a imagem se repita */
 }
 
 /* Navbar */
 .navbar {
-    background-color: rgba(0, 0, 0, 0.8);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #343a40, #4c83ff);
+}
+
+.navbar-brand {
+  font-size: 1.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #fff;
+}
+
+.navbar-brand:hover {
+  color: #6dd5ed;
 }
 
 .nav-link {
-    color: #ffd700;
-    font-size: 1.1rem;
-    padding: 10px 15px;
-    transition: color 0.3s ease, background-color 0.3s ease;
+  margin-right: 15px;
+  font-size: 1.1rem;
+  color: #ddd;
+  transition: color 0.3s ease-in-out;
 }
 
 .nav-link:hover {
-    color: #ffffff;
-    background-color: #0d6efd;
-    border-radius: 5px;
+  color: #fff;
+  text-decoration: underline;
 }
 
-/* Botão de Lista de Participantes */
-.btn-participants {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #28a745; /* Cor de fundo */
-    color: #ffffff; /* Cor do texto */
-    padding: 12px 20px; /* Padding do botão */
-    border: none; /* Sem borda */
-    border-radius: 6px; /* Bordas arredondadas */
-    font-size: 1.2rem; /* Tamanho da fonte */
-    text-decoration: none; /* Remove sublinhado */
-    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra do botão */
-    z-index: 1000; /* Z-index alto para sobreposição */
+button.btn-info {
+  margin-left: 15px;
+  animation: fadeIn 1.5s ease-in-out;
+  background-color: #6dd5ed;
+  border: none;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color 0.3s;
 }
 
-.btn-participants:hover {
-    background-color: #218838; /* Cor de fundo ao passar o mouse */
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4); /* Efeito de sombra ao passar o mouse */
+button.btn-info:hover {
+  background-color: #4c83ff;
 }
 
-/* Formulário de Inscrição */
-section h3 {
-    color: #f8f9fa;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 30px;
+/* Header */
+header {
+  text-align: center;
+  padding: 50px 0;
+  background: linear-gradient(135deg, #4c83ff, #6dd5ed);
+  color: white;
+  animation: fadeIn 1.5s ease-out;
 }
 
-.form-control {
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid #ced4da;
-    padding: 10px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+header img {
+  width: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
 }
 
-.form-control:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 10px rgba(13, 110, 253, 0.2);
+header h1 {
+  font-weight: 700;
+  margin-bottom: 10px;
+  animation: slideInDown 1.5s ease-out;
 }
 
-.btn-primary, .btn-success {
-    padding: 12px 20px;
-    font-size: 1.2rem;
-    border-radius: 6px;
-    letter-spacing: 0.5px;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+/* Formulário */
+.container {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-top: 30px;
 }
 
-.btn-primary {
-    background-color: #0d6efd;
-    border: none;
+.container h3 {
+  margin-bottom: 20px;
+  font-weight: 600;
+  text-align: center;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+.form-group label {
+  font-weight: 600;
+  color: #555;
 }
 
-.btn-success {
-    background-color: #28a745;
-    border: none;
+input[type="text"], input[type="tel"] {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  transition: box-shadow 0.3s;
 }
 
-.btn-success:hover {
-    background-color: #218838;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+input[type="text"]:focus, input[type="tel"]:focus {
+  border-color: #4c83ff;
+  box-shadow: 0 0 10px rgba(76, 131, 255, 0.5);
 }
 
-/* Cartões */
-.card {
-    background-color: rgba(0, 123, 255, 0.1);
-    margin-top: 20px;
-    border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: none;
+button.btn-block {
+  margin-top: 15px;
+  padding: 15px;
+  font-weight: 600;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
 }
 
-.card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+button.btn-primary {
+  background-color: #4c83ff;
+  border: none;
+  color: #fff;
+}
+
+button.btn-primary:hover {
+  background-color: #6dd5ed;
+  transform: scale(1.05);
+}
+
+button.btn-success {
+  background-color: #28a745;
+  border: none;
+  color: #fff;
+}
+
+button.btn-success:hover {
+  background-color: #218838;
+  transform: scale(1.05);
 }
 
 /* Políticas e Termos */
 .terms {
-    margin-top: 50px;
-    background: rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  margin-top: 30px;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .terms h4 {
-    font-size: 1.5rem;
-    color: #ffd700;
-    margin-bottom: 20px;
-}
-
-.terms p, .terms ul li {
-    font-size: 1.1rem;
-    color: #f8f9fa;
+  margin-bottom: 10px;
+  color: #333;
 }
 
 .terms ul li {
-    margin-bottom: 10px;
+  margin-bottom: 5px;
+  line-height: 1.6;
 }
 
-/* Estilo do Footer */
+/* Footer */
 footer {
-    background: linear-gradient(135deg, #0d6efd, #6610f2);
-    color: #ffffff;
-    padding: 20px 0;
-    text-align: center;
-}
-
-footer p {
-    font-size: 1rem;
-    letter-spacing: 1px;
-    margin: 0;
-}
-
-footer:hover {
-    background: linear-gradient(135deg, #6610f2, #0d6efd);
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
 
 /* Animações */
-@keyframes headerFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-50px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes slideInDown {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2.5rem;
-    }
-    .nav-link {
-        font-size: 1rem;
-        padding: 8px 10px;
-    }
-    .btn-participants {
-        font-size: 1rem; /* Tamanho do botão menor em telas menores */
-        padding: 10px 15px;
-    }
-    .card {
-        margin: 10px 0;
-    }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-@media (max-width: 576px) {
-    header h1 {
-        font-size: 2rem;
-    }
-    section h3 {
-        font-size: 1.5rem;
-    }
+.juma{
+  color: #fff;
+  background-color: rgb(40, 8, 156);
 }
-
-      border-bottom: 5px solid #ffd700;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      animation: headerFadeIn 1.5s ease;
-    }
-
-    header img {
-      width: 120px;
-      border-radius: 50%;
-      margin-bottom: 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    }
-
-    header img:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    }
-
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-
-    header p {
-      font-size: 1.2rem;
-      letter-spacing: 1px;
-    }
-
-    /* Navbar */
-    .navbar {
-      background-color: rgba(182, 92, 92, 0.856);
-    }
-
-    .nav-link {
-      color: #ffd700;
-      font-size: 1.1rem;
-      padding: 10px 15px;
-      transition: color 0.3s ease, background-color 0.3s ease;
-    }
-
-    .nav-link:hover {
-      color: #db0606;
-      background-color: #0d6efd;
-      border-radius: 5px;
-    }
-
-    /* Formulário de Inscrição */
-    section h3 {
-      color: #f8f9fa;
-      font-size: 2rem;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
-
-    .form-control {
-      background-color: rgba(255, 255, 255, 0.8);
-      border: 1px solid #ced4da;
-      padding: 10px;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .form-control:focus {
-      border-color: #0d6efd;
-      box-shadow: 0 0 10px rgba(13, 110, 253, 0.2);
-    }
-
-    .btn-primary, .btn-success {
-      padding: 12px 20px;
-      font-size: 1.2rem;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .btn-primary {
-      background-color: #0d6efd;
-      border: none;
-    }
-
-    .btn-primary:hover {
-      background-color: #0056b3;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .btn-success {
-      background-color: #28a745;
-      border: none;
-    }
-
-    .btn-success:hover {
-      background-color: #218838;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Botão de Lista de Participantes */
-    .btn-participants {
-   
-      position: absolute;
-      top: 15px;
-      right: 15px;
-    }
-    
-
-    .btn-participants:hover {
-      background-color: #e00700;
-      color: #ffffff;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Cartões */
-    .card {
-      background-color: rgba(0, 123, 255, 0.1);
-      margin-top: 20px;
-      border-radius: 10px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      border: none;
-    }
-
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Políticas e Termos */
-    .terms {
-      margin-top: 50px;
-      background: rgba(0, 0, 0, 0.8);
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-    }
-
-    .terms h4 {
-      font-size: 1.5rem;
-      color: #ffd700;
-      margin-bottom: 20px;
-    }
-
-    .terms p, .terms ul li {
-      font-size: 1.1rem;
-      color: #f8f9fa;
-    }
-
-    .terms ul li {
-      margin-bottom: 10px;
-    }
-
-    /* Estilo do Footer */
-    footer {
-      background: linear-gradient(135deg, #0d6efd, #6610f2);
-      color: #ffffff;
-      padding: 20px 0;
-      text-align: center;
-    }
-
-    footer p {
-      font-size: 1rem;
-      letter-spacing: 1px;
-      margin: 0;
-    }
-
-    footer:hover {
-      background: linear-gradient(135deg, #6610f2, #0d6efd);
-    }
-
-    /* Animações */
-    @keyframes headerFadeIn {
-      0% {
-        opacity: 0;
-        transform: translateY(-50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .juma {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: linear-gradient(to bottom, #4CAF50, #388E3C); /* Gradiente de cor */
-    color: white; /* Cor do texto */
-    border: none; /* Remove borda padrão */
-    border-radius: 10px; /* Canto arredondado */
-    width: 120px; /* Largura do botão */
-    height: 50px; /* Altura do botão */
-    display: flex; /* Usar flexbox para centralizar o texto */
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra */
-    cursor: pointer; /* Cursor indica que é clicável */
-    transition: all 0.3s; /* Transição suave para todas as propriedades */
-    font-size: 18px; /* Tamanho da fonte maior */
-    font-weight: bold; /* Fonte em negrito */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Sombra do texto para melhorar a legibilidade */
-}
-
-.juma:before,
-.juma:after {
-    content: ""; /* Para criar as "asas" */
-    position: absolute;
-    width: 30px; /* Largura das "asas" */
-    height: 50px; /* Altura das "asas" */
-    background: inherit; /* Para herdar o gradiente de cor */
-    border-radius: 10px; /* Canto arredondado das "asas" */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra das "asas" */
-    top: 0; /* Posiciona as "asas" na parte superior */
-}
-
-.juma:before {
-    left: -30px; /* Para a "asa" esquerda */
-    transform: translateY(-5px) skewX(-10deg); /* Inclinação côncava para a esquerda */
-}
-
-.juma:after {
-    right: -30px; /* Para a "asa" direita */
-    transform: translateY(-5px) skewX(10deg); /* Inclinação côncava para a direita */
-}
-
-.juma:hover {
-    background: linear-gradient(to bottom, #388E3C, #4CAF50); /* Inverte o gradiente ao passar o mouse */
-    transform: translateY(-2px); /* Eleva o botão ao passar o mouse */
-}
-
-
 
   </style>
 </head>
@@ -495,14 +215,14 @@ footer:hover {
     <div class="collapse navbar-collapse">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <div class="juma"><a class="nav-link" href="lista_participantes.html">Lista de Participantes</a></div>
-          <button class="btn btn-info" onclick="requestPassword()">Empréstimo</button>
+        
+        <button class="btn btn-info" onclick="requestPassword()">Empréstimo</button>
         </header>
         </li>
       </ul>
     </div>
   </nav>
-
+  <div class="juma"><a class="nav-link" href="lista_participantes.html">Lista de Participantes</a></div>
   <!-- Header -->
   <header>
     <img src="img/logo.png" alt="Logo do Poupança Micten"> <!-- Imagem do logo ou foto de perfil -->
