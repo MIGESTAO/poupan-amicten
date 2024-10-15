@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Participantes - Poupança Micten</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-image: url('https://source.unsplash.com/1600x900/?finance,banking');
+      background-size: cover;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    header {
+      background: rgba(0, 191, 165, 0.8);
+      color: white;
+      text-align: center;
+      padding: 50px 0;
+    }
+
+    .card {
+      margin-top: 20px;
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    footer {
+      background: #1e88e5;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .loading {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="index.html">Poupança Micten</a>
+  </nav>
+
+  <!-- Botão para voltar à página principal -->
+  <div class="back-button">
+    <a href="index.html" class="btn btn-primary">
+      <i class="fas fa-arrow-left"></i> Voltar à Página Principal
+    </a>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <h1 class="display-4">Lista de Participantes</h1>
+    <p class="lead">Veja todos os participantes que se inscreveram no grupo Poupança Micten.</p>
+  </header>
+
+  <!-- List of Participants -->
+  <section class="container my-5">
+    <h3 class="text-center mb-4">Participantes Inscritos</h3>
+    <div id="loading" class="loading">Carregando participantes...</div>
+    <ul id="participantsList" class="list-group" style="display: none;">
+      <!-- Lista será preenchida aqui dinamicamente -->
+    </ul>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-primary text-white text-center py-3">
+    <p>© 2024 Poupança Micten | Todos os direitos reservados</p>
+  </footer>
+
+  <!-- Firebase & Scripts -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+  <script>
+    // Configura o Firebase
+    const firebaseConfig = {
+            apiKey: "YOUR_API_KEY_HERE",
+            authDomain: "xitique-61310.firebaseapp.com",
+            databaseURL: "https://xitique-61310-default-rtdb.firebaseio.com",
+            projectId: "xitique-61310",
+            storageBucket: "xitique-61310.appspot.com",
+            messagingSenderId: "331274991404",
+            appId: "1:331274991404:web:2fec0eb082d3fe0b33de89",
+            measurementId: "G-DFDMBKW1RK"
+        };
+
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+
+    // Função para atualizar a lista de participantes em tempo real
+    function atualizarLista() {
+      const participantsList = document.getElementById('participantsList');
+      const loading = document.getElementById('loading');
+      participantsList.innerHTML = '';
+
+      // Usar onSnapshot para escutar alterações em tempo real
+      db.collection("inscritos").onSnapshot((querySnapshot) => {
+        loading.style.display = 'none'; // Esconde a mensagem de carregamento
+        participantsList.style.display = 'block'; // Mostra a lista
+        let contador = 1; // Inicializa contador
+
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          const li = document.createElement('li');
+          li.textContent = `${contador}. ${data.nome} - ${data.telefone}`;
+          li.classList.add('list-group-item');
+          participantsList.appendChild(li);
+          contador++; // Incrementa o contador
+        });
+      }, (error) => {
+        console.error("Erro ao carregar participantes: ", error);
+      });
+    }
+
+    // Chama a função de atualizar lista ao carregar a página
+    atualizarLista();
+  </script>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Empréstimos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+  <style>
+body {
+  background-color: #f3f4f6; /* Fundo claro */
+  color: #2c3e50; /* Texto escuro */
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+h1 {
+  color: #3498db; /* Azul moderno */
+  font-size: 3em;
+  margin-bottom: 40px;
+  text-align: center;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.card {
+  margin-bottom: 20px;
+  background-color: #ffffff; /* Fundo branco para cards */
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra mais suave */
+  transition: transform 0.4s, box-shadow 0.4s;
+  animation: slideIn 1.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-10px); /* Efeito de elevação suave */
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2); /* Sombra mais intensa */
+}
+
+#resumoFinanceiro {
+  margin-bottom: 40px;
+  background: linear-gradient(135deg, #ecf0f1, #bdc3c7); /* Gradiente suave */
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  transition: all 0.4s;
+  animation: zoomIn 1s ease-in-out;
+}
+
+h5 {
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #2980b9; /* Azul escuro */
+}
+
+/* Estilo específico para os valores */
+#totalDividas {
+  color: #e74c3c; /* Vermelho vibrante para dívidas */
+  font-weight: bold; /* Negrito para destaque */
+  font-size: 1.5em; /* Tamanho aumentado */
+}
+
+#totalJuros {
+  color: #f39c12; /* Amarelo para juros */
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+#totalReembolsos {
+  color: #28a745; /* Verde para reembolsos */
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+#saldoDisponivel {
+  color: #3498db; /* Azul claro para saldo */
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+input.form-control {
+  background-color: #ffffff; /* Fundo branco para inputs */
+  color: #34495e; /* Texto escuro */
+  border: 2px solid #3498db; /* Azul moderno */
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+input.form-control:focus {
+  box-shadow: 0 0 10px #3498db;
+  border-color: #2980b9; /* Azul mais escuro ao focar */
+}
+
+.btn-primary {
+  background-color: #3498db; /* Azul moderno */
+  border: none;
+  color: #ffffff; /* Texto branco */
+}
+
+.btn-primary:hover {
+  background-color: #2980b9; /* Azul mais escuro no hover */
+  transform: translateY(-2px); /* Efeito de elevação suave */
+}
+
+.btn-warning {
+  background-color: #e67e22; /* Laranja queimado */
+  border: none;
+}
+
+.btn-warning:hover {
+  background-color: #d35400; /* Laranja mais escuro no hover */
+  transform: translateY(-2px); /* Efeito de elevação suave */
+}
+
+.btn-success {
+  background-color: #27ae60; /* Verde moderno */
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #219653; /* Verde mais escuro no hover */
+  transform: translateY(-2px); /* Efeito de elevação suave */
+}
+
+.text-success {
+  color: #27ae60; /* Verde moderno */
+}
+
+.text-danger {
+  color: #e74c3c; /* Vermelho moderno */
+}
+
+.input-group {
+  margin-bottom: 30px;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.4em;
+  }
+
+  p {
+    font-size: 1.1em;
+  }
+
+  #resumoFinanceiro p {
+    font-size: 1.2em;
+  }
+
+  #resumoFinanceiro span {
+    font-size: 1.4em;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center mb-4">Sistema de Empréstimos</h1>
+
+    <!-- Formulário para adicionar cliente -->
+    <div class="mb-4">
+      <div class="input-group">
+        <input type="text" id="clienteNome" class="form-control" placeholder="Nome do Cliente">
+        <button class="btn btn-primary" onclick="adicionarCliente()">Adicionar Cliente</button>
+      </div>
+    </div>
+
+    <!-- Resumo financeiro -->
+    <div id="resumoFinanceiro">
+      <div class="card">
+        <div class="card-body">
+          <h5>Resumo Financeiro</h5>
+          <p>Total de Clientes: <span id="totalClientes">0</span></p>
+          <p>Total de Dívidas (sem juros): <span id="totalDividas">0 MZN</span></p>
+          <p>Total de Juros: <span id="totalJuros">0 MZN</span></p>
+          <p>Total de Reembolsos: <span id="totalReembolsos">0 MZN</span></p>
+          <p>Saldo Disponível: <span id="saldoDisponivel">0 MZN</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de clientes -->
+    <div id="clientesContainer"></div>
+  </div>
+
+  <script>
+    // Configuração do Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8XOHaLCzNLDrIlHG3em4g4gyYIKTLWpQ",
+      authDomain: "xitique-61310.firebaseapp.com",
+      databaseURL: "https://xitique-61310-default-rtdb.firebaseio.com",
+      projectId: "xitique-61310",
+      storageBucket: "xitique-61310.appspot.com",
+      messagingSenderId: "331274991404",
+      appId: "1:331274991404:web:2fec0eb082d3fe0b33de89",
+      measurementId: "G-DFDMBKW1RK"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Inicializando o saldo com depósito inicial
+    const depositoInicial = 10000; // Defina o valor do depósito inicial aqui
+
+    // Carregar ou inicializar o resumo financeiro no Firebase
+    function inicializarResumo() {
+      db.ref('resumo').once('value', (snapshot) => {
+        if (!snapshot.exists()) {
+          const resumoInicial = {
+            totalClientes: 0,
+            totalDividas: 0,
+            totalJuros: 0,
+            totalReembolsos: 0,
+            saldoDisponivel: depositoInicial
+          };
+          db.ref('resumo').set(resumoInicial);
+        }
+      });
+    }
+
+    function adicionarCliente() {
+      const nome = document.getElementById('clienteNome').value;
+      if (nome === '') {
+        alert('Por favor, insira um nome');
+        return;
+      }
+
+      const clienteId = Date.now();
+      const cliente = { 
+        id: clienteId, nome, divida: 0, juros: 0, totalPagar: 0, reembolsado: 0, status: "Sem Empréstimo", historicoEmprestimos: [], historicoReembolso: []
+      };
+
+      db.ref('clientes/' + clienteId).set(cliente);
+      document.getElementById('clienteNome').value = '';
+      carregarClientes();
+      atualizarResumoFinanceiro();
+    }
+
+    function carregarClientes() {
+      db.ref('clientes').once('value', (snapshot) => {
+        const clientesContainer = document.getElementById('clientesContainer');
+        clientesContainer.innerHTML = '';
+        snapshot.forEach((childSnapshot) => {
+          const cliente = childSnapshot.val();
+          const statusClass = cliente.status === "Pago" ? "text-success" : "text-danger";
+          let historicoHTML = '';
+
+          if (cliente.historicoReembolso && cliente.historicoReembolso.length > 0) {
+            cliente.historicoReembolso.forEach((reembolso) => {
+              historicoHTML += `<p>Reembolsou: ${reembolso.valor} MZN - Restante: ${reembolso.restante} MZN - Data: ${reembolso.dataHora}</p>`;
+            });
+          }
+
+          if (cliente.historicoEmprestimos && cliente.historicoEmprestimos.length > 0) {
+            cliente.historicoEmprestimos.forEach((emprestimo) => {
+              historicoHTML += `<p>Empréstimo de: ${emprestimo.valor} MZN - Data: ${emprestimo.dataHora}</p>`;
+            });
+          }
+
+          clientesContainer.innerHTML += `
+            <div class="card">
+              <div class="card-body">
+                <h5>${cliente.nome}</h5>
+                <p>Status: <span class="${statusClass}">${cliente.status}</span></p>
+                <p>Dívida Atual: ${cliente.totalPagar} MZN</p>
+                ${historicoHTML}
+                <button class="btn btn-warning" onclick="emprestar(${cliente.id})">Emprestar</button>
+                <button class="btn btn-success" onclick="reembolsar(${cliente.id})">Reembolsar</button>
+              </div>
+            </div>
+          `;
+        });
+      });
+    }
+
+    function emprestar(id) {
+      const valor = parseFloat(prompt('Digite o valor do empréstimo (MZN):'));
+      if (isNaN(valor) || valor <= 0) {
+        alert('Valor inválido');
+        return;
+      }
+
+      // Verificar se o saldo disponível no Firebase é suficiente
+      db.ref('resumo/saldoDisponivel').once('value').then((snapshot) => {
+        let saldoDisponivel = snapshot.val();
+
+        if (valor > saldoDisponivel) {
+          alert('Saldo insuficiente');
+          return;
+        }
+
+        const juros = valor * 0.2; // Juros de 20%
+        const totalPagar = valor + juros;
+        const emprestimo = {
+          valor,
+          juros,
+          totalPagar,
+          dataHora: new Date().toLocaleString()
+        };
+
+        db.ref('clientes/' + id).once('value').then((snapshot) => {
+          const cliente = snapshot.val();
+          cliente.divida += valor;
+          cliente.juros += juros;
+          cliente.totalPagar += totalPagar;
+          cliente.status = 'Em Dívida';
+
+          if (!cliente.historicoEmprestimos) {
+            cliente.historicoEmprestimos = [];
+          }
+          cliente.historicoEmprestimos.push(emprestimo);
+
+          db.ref('clientes/' + id).set(cliente);
+          saldoDisponivel -= valor; // Atualizar saldo disponível
+          db.ref('resumo/saldoDisponivel').set(saldoDisponivel); // Salvar no Firebase
+
+          carregarClientes();
+          atualizarResumoFinanceiro();
+        });
+      });
+    }
+
+    function reembolsar(id) {
+      const valor = parseFloat(prompt('Digite o valor do reembolso (MZN):'));
+      if (isNaN(valor) || valor <= 0) {
+        alert('Valor inválido');
+        return;
+      }
+
+      db.ref('clientes/' + id).once('value').then((snapshot) => {
+        const cliente = snapshot.val();
+        if (valor > cliente.totalPagar) {
+          alert('Valor de reembolso maior que o total a pagar');
+          return;
+        }
+
+        cliente.totalPagar -= valor;
+        cliente.reembolsado += valor;
+        if (cliente.totalPagar === 0) {
+          cliente.status = 'Pago';
+        } else {
+          // Se o valor não foi pago completamente, recalcula com 20% de juros sobre o saldo restante
+          const jurosRemanescente = cliente.totalPagar * 0.2;
+          cliente.totalPagar += jurosRemanescente;
+          cliente.juros += jurosRemanescente;
+        }
+
+        if (!cliente.historicoReembolso) {
+          cliente.historicoReembolso = [];
+        }
+        cliente.historicoReembolso.push({
+          valor,
+          restante: cliente.totalPagar,
+          dataHora: new Date().toLocaleString()
+        });
+
+        db.ref('clientes/' + id).set(cliente);
+
+        // Atualizar saldo disponível após o reembolso
+        db.ref('resumo/saldoDisponivel').once('value').then((snapshot) => {
+          let saldoDisponivel = snapshot.val();
+          saldoDisponivel += valor; // Aumentar o saldo disponível
+          db.ref('resumo/saldoDisponivel').set(saldoDisponivel); // Salvar no Firebase
+        });
+
+        atualizarResumoFinanceiro();
+        carregarClientes();
+      });
+    }
+
+    function atualizarResumoFinanceiro() {
+      let totalDividas = 0;
+      let totalJuros = 0;
+      let totalReembolsos = 0;
+      let totalClientes = 0;
+
+      db.ref('clientes').once('value', (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const cliente = childSnapshot.val();
+          totalDividas += cliente.divida;
+          totalJuros += cliente.juros;
+          totalReembolsos += cliente.reembolsado;
+          totalClientes++;
+        });
+
+        db.ref('resumo').update({
+          totalClientes,
+          totalDividas,
+          totalJuros,
+          totalReembolsos
+        });
+
+        document.getElementById('totalDividas').innerText = totalDividas + ' MZN';
+        document.getElementById('totalJuros').innerText = totalJuros + ' MZN';
+        document.getElementById('totalReembolsos').innerText = totalReembolsos + ' MZN';
+        document.getElementById('totalClientes').innerText = totalClientes;
+      });
+
+      // Carregar saldo disponível do Firebase
+      db.ref('resumo/saldoDisponivel').once('value', (snapshot) => {
+        const saldoDisponivel = snapshot.val() || 0;
+        document.getElementById('saldoDisponivel').innerText = saldoDisponivel + ' MZN';
+      });
+    }
+
+    window.onload = function() {
+      inicializarResumo(); // Inicializa ou carrega o resumo financeiro
+      carregarClientes();
+      atualizarResumoFinanceiro();
+    }
+  </script>
+</body>
+</html>
